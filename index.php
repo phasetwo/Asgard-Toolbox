@@ -1,9 +1,8 @@
 <?php
-
 class rankHandler {
 
         public static $rankingUrl = "http://5.9.67.228/asgard/ranking.php?char=";
-        
+		
         public static $rankingAidian = "aid";
         public static $rankingBulkan = "bulkan";
         public static $rankingHuman = "human";
@@ -66,9 +65,7 @@ class rankHandler {
 						$line[$item] = preg_replace("/\<(td|th|table|tr|div)(.*?)\>/", "|", $line[$item]);
                         $line[$item] = preg_replace("/\<\/(td|th|table|tr|div)\>/", "|", $line[$item]);
                         $line[$item] = preg_replace("/(.)\\1{3,}/sS", '$1', $line[$item]);
-						
 						$line[$item] = preg_replace("/\<(td|th|table|tr|div)(.*?)\>(.*)\<\/(td|th|table|tr|div)\>/", "|", $line[$item]);
-                        
                         $toplist[] = explode("|", $line[$item]);
                 }
                 
@@ -171,9 +168,8 @@ class rankHandler {
 		}
 			
 }
+
 header("content-type: text/plain");
-
-
 $class = new rankHandler("localhost", "root", "", "bf");
 $class->readRanks("aidian");
 $class->parseRanks();
