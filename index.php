@@ -14,6 +14,8 @@ class rankHandler {
         public static $mysqli;		
 		public static $playersAdded = array();
 		
+		public static $gitTest = "Dies ist eine Testvariable nur fuer GITHUB!";
+		
 		// Zum Anfang wird direkt eine MySQL Verbindung aufgebaut
 		public function __construct($dbhost, $dbuser, $dbpass, $db) {
 			self::$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $db);
