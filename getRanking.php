@@ -188,23 +188,22 @@ class rankHandler {
 					$results[] = $array;
 				}
 				
-				$diffLevel = self::goodNumber($results[1]['playerExp'] - $results[0]['playerExp']);
+				$diffLevel = $results[1]['playerLevel'] - $results[0]['playerLevel'];
+				echo "Erst ".$results[1]['playerLevel'].", dann ".$results[0]['playerLevel'];
 				
-				switch($diffLevel) {
-					
-					case $difflevel > 1:
-						// Wenn Level 30x, dann 1 Mrd. pro Level
-						if(preg_match("/30(0-9)/", $results[1]['playerLevel'])) $plusExp = 1000000000;
-						break;
-					
+				if(isset($results[1]['playerLevel']) && $results[1]['playerLevel'] != $results[0]['playerLevel']) {
+					echo "Unterschied!";
+					$plusExp = self::getPlusExp($results[0]['playerLevel']) - (self::getPlusExp($result[1]['playerLevel']) - $results[1]['playerExp']);
+					echo $plusExp;
 				}
 				
-				$diffExp = $result[] = self::goodNumber($results[1]['playerExp'] - $results[0]['playerExp']);
+				// Exp bei Levelup korrigieren
+				$diffExp = $result[] = self::goodNumber(($results[1]['playerExp'] - $results[0]['playerExp']) + $plusExp);
 
 				$result = array(
 					"progressRank" => $results[1]['playerRank'] - $results[0]['playerRank'],
 					"progressLevel" => $results[0]['playerLevel'] - $results[1]['playerLevel'],
-					"progressExp" => self::goodNumber($results[1]['playerExp'] - $results[0]['playerExp'])
+					"progressExp" => $diffExp
 				);
 				
 				return $result;
@@ -227,9 +226,70 @@ class rankHandler {
 			
 			return number_format($n);
 		}
+		
+		private static function getPlusExp($int) {
+			
+			switch($int) {
+				
+				case ($int < 260):
+					$plus = 100000000;
+					break;
+				case ($int < 270):
+					$plus = 200000000;
+					break;
+				case ($int < 280):
+					$plus = 400000000;
+					break;
+				case ($int < 290):
+					$plus = 600000000;
+					break;
+				case ($int < 300):
+					$plus = 800000000;
+					break;
+				case ($int < 310):
+					$plus = 1000000000;
+					break;
+				case ($int < 320):
+					$plus = 1200000000;
+					break;
+				case ($int < 330):
+					$plus = 1400000000;
+					break;
+				case ($int < 340):
+					$plus = 1600000000;
+					break;
+				case ($int < 341):
+					$plus = 4000000000;
+					break;
+				case ($int < 341):
+					$plus = 8000000000;
+					break;
+				case ($int < 342):
+					$plus = 16000000000;
+					break;
+				case ($int < 343):
+					$plus = 32000000900;
+					break;
+			}
+			
+			return $plus;
+			
+		}
 				
 
 }
+
+/*
+ * Level-Up Expzahlen
+ * 
+ * 300-310: 1.000.000.000 (1Mrd)
+ * 310-320: 1.200.000.000
+ * 320-330: 1.400.000.000
+ * 330-340: 1.600.000.000
+ * 340-341: 4.000.000.000
+ * 341-342: 8.000.000.000
+ * 342-343: 16.000.000.000 (immer verdoppeln bis 350)
+ */
 
 /*
 header("content-type: text/plain");
