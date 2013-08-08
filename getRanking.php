@@ -142,6 +142,7 @@ class rankHandler {
 			return $array;
 		}
 		
+		// Gibt ID eines Spielers aus
 		private static function getPlayerId($array) {
 			return $array['id'];
 		}
@@ -190,7 +191,7 @@ class rankHandler {
 
 				$result = array(
 					"progressRank" => $results[1]['playerRank'] - $results[0]['playerRank'],
-					"progressLevel" => $results[1]['playerLevel'] - $results[0]['playerLevel'],
+					"progressLevel" => $results[0]['playerLevel'] - $results[1]['playerLevel'],
 					"progressExp" => self::goodNumber($results[1]['playerExp'] - $results[0]['playerExp'])
 				);
 				
@@ -209,9 +210,9 @@ class rankHandler {
 			if(!is_numeric($n)) return false;
 			
 			// now filter it;
-			if($n>1000000000000) return round(($n/1000000000000),1).' T';
-			else if($n>1000000000) return round(($n/1000000000),1).' B';
-			else if($n>1000000) return round(($n/1000000),1).'M';
+			if($n>1000000000000) return round(($n/1000000000000),1).' Trd.';
+			else if($n>1000000000) return round(($n/1000000000),1).' Mrd.';
+			else if($n>1000000) return round(($n/1000000),1).' Mio.';
 			else if($n>1000) return round(($n/1000),1).'k';
 			
 			return number_format($n);
@@ -220,13 +221,12 @@ class rankHandler {
 
 }
 
+/*
 header("content-type: text/plain");
 $class = new rankHandler("localhost", "bf", "bf", "bf");
-
-/*
 $class->readRanks("bulkan");
 $class->parseRanks();
 $class->saveToDB();
-*/
 
 print_r($class->getPlayerProgress($_GET['player']));
+*/
