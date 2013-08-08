@@ -188,6 +188,18 @@ class rankHandler {
 					$results[] = $array;
 				}
 				
+				$diffLevel = self::goodNumber($results[1]['playerExp'] - $results[0]['playerExp']);
+				
+				switch($diffLevel) {
+					
+					case $difflevel > 1:
+						// Wenn Level 30x, dann 1 Mrd. pro Level
+						if(preg_match("/30(0-9)/", $results[1]['playerLevel'])) $plusExp = 1000000000;
+						break;
+					
+				}
+				
+				$diffExp = $result[] = self::goodNumber($results[1]['playerExp'] - $results[0]['playerExp']);
 
 				$result = array(
 					"progressRank" => $results[1]['playerRank'] - $results[0]['playerRank'],
@@ -197,8 +209,6 @@ class rankHandler {
 				
 				return $result;
 				
-			} else {
-				echo "Nix gefunden";
 			}
 		}
 		
