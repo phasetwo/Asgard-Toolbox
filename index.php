@@ -2,7 +2,7 @@
 class rankHandler {
 
         public static $rankingUrl = "http://5.9.67.228/asgard/ranking.php?char=";
-		
+
         public static $rankingAidian = "aid";
         public static $rankingBulkan = "bulkan";
         public static $rankingHuman = "human";
@@ -13,7 +13,7 @@ class rankHandler {
         
         public static $mysqli;		
 		public static $playersAdded = array();
-		
+
 		// Zum Anfang wird direkt eine MySQL Verbindung aufgebaut
 		public function __construct($dbhost, $dbuser, $dbpass, $db) {
 			self::$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $db);
@@ -115,47 +115,54 @@ class rankHandler {
 		// Daten werden in DB gespeichert
         public static function saveToDB() {
             foreach(self::$rankArray as $item) {
-			
+
 				if(!self::playerExist($item['playerName'])) {
 					echo $item['playerName']." ist noch nicht in der Datenbank, lege an.\n";
 					self::playerAdd($item['playerName']);
 				}
-				
+
 				self::playerUpdate($item, self::getPlayer($item['playerName']));
-				
+
 			}
         }
-		
+
 		// Pruefen: Gibt es den Spieler schon in der Datenbank?
 		private static function playerExist($playerName) {
 			$query = self::$mysqli->query("SELECT playerName FROM players WHERE playerName='".$playerName."'");
 			if(!$query->num_rows) return false; else return true;
 		}
-		
+
 		// Spieler Details aus der Datenbank holen
-		private static function getPlayer($playerName) {
-			$query = self::$mysqli->query("SELECT id, playerName FROM players WHERE playerName='".$playerName."'");
+		private static function getPlayer($playerName, $extraQuery = false) {
+			$query = "SELECT id, playerName FROM players WHERE playerName='".$playerName."'";
+			if($extraQuery) $query.= " ".$extraQuery;
+				
+			$query = self::$mysqli->query($query);
 			$array = $query->fetch_array(MYSQLI_ASSOC);
 			return $array;
 		}
 		
+		private static function getPlayerId($array) {
+			return $array['id'];
+		}
+
 		// Diese Funktion entfernt die Punkte und macht ganzzahlige Exp-Werte
 		private static function fixInteger($int) {
 			$int = preg_replace("/[.]{1,5}/", "", $int);
 			return intval($int);
 		}
-		
+
 		// Spieler zu DB hinzufuegen
 		public static function playerAdd($playerName) {
 			$query = self::$mysqli->query("INSERT INTO players VALUES('', '".$playerName."', '0', '".time()."')");
 			self::playerAddArray(self::$mysqli->insert_id, $playerName, "");
 		}
-		
+
 		// Spieler in internen Spieler-Array speichern
 		public static function playerAddArray($id, $playerName, $server) {
 			self::$playersAdded[$playerName] = array("id" => $id, "name" => $playerName, "server" => $server);
 		}
-		
+
 		// Neuen Datensatz zu Spielerfortschritt hinzufuegen
 		public static function playerUpdate($playerArray, $playerInfo) {
 			$query = self::$mysqli->query("INSERT INTO data VALUES('', '".$playerInfo['id']."',
@@ -166,11 +173,60 @@ class rankHandler {
 			)");
 			echo $playerArray['playerName'].": Fortschritt eingetragen.\n";
 		}
+		
+		// Unterschiede eines Spielers als Array ausgeben
+		// @param id
+		public static function getPlayerProgress($playerName) {
+			if(self::playerExist($playerName)) {
+				
+				// mindestens 2 Ergebnisse finden
+				$query = "SELECT * FROM data WHERE playerId='".self::getPlayerId(self::getPlayer($playerName))."' ORDER BY id DESC LIMIT 2";
+				$query = self::$mysqli->query($query);
+				
+				while($array = $query->fetch_array(MYSQLI_ASSOC)) {
+					$results[] = $array;
+				}
+				
+
+				$result = array(
+					"progressRank" => $results[1]['playerRank'] - $results[0]['playerRank'],
+					"progressLevel" => $results[1]['playerLevel'] - $results[0]['playerLevel'],
+					"progressExp" => self::goodNumber($results[1]['playerExp'] - $results[0]['playerExp'])
+				);
+				
+				return $result;
+				
+			} else {
+				echo "Nix gefunden";
+			}
+		}
+		
+		public static function goodNumber($n) {
+			// first strip any formatting;
+			$n = (0+str_replace(",","",$n));
 			
+			// is this a number?
+			if(!is_numeric($n)) return false;
+			
+			// now filter it;
+			if($n>1000000000000) return round(($n/1000000000000),1).' T';
+			else if($n>1000000000) return round(($n/1000000000),1).' B';
+			else if($n>1000000) return round(($n/1000000),1).'M';
+			else if($n>1000) return round(($n/1000),1).'k';
+			
+			return number_format($n);
+		}
+				
+
 }
 
 header("content-type: text/plain");
-$class = new rankHandler("localhost", "root", "", "bf");
-$class->readRanks("aidian");
+$class = new rankHandler("localhost", "bf", "bf", "bf");
+
+/*
+$class->readRanks("bulkan");
 $class->parseRanks();
 $class->saveToDB();
+*/
+
+print_r($class->getPlayerProgress($_GET['player']));
