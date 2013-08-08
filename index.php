@@ -137,7 +137,6 @@ switch($_GET['action']) {
 		}
 
 		foreach($match as $item) {
-			#$line[$item] = preg_replace("/\<(td|th|table|tr) (.*?)\<\/(td|th|table|tr)\>/", "", $line[$item]);
 			$line[$item] = preg_replace("/\<(td|th|table|tr|div)(.*?)\>/", "|", $line[$item]);
 			$line[$item] = preg_replace("/\<\/(td|th|table|tr|div)\>/", "|", $line[$item]);
 			$line[$item] = preg_replace("/(.)\\1{3,}/sS", '$1', $line[$item]);
@@ -159,12 +158,8 @@ switch($_GET['action']) {
 		unset($toplistSort[206], $toplistSort[207]);
 		
 		// Ab hier jeweils ein Spieler
-		while($key <= count($toplistSort)) {
-			$output.= "\t<tr>\n";
-
+		while($key <= count($toplistSort)-1) {
 			while($i < 4) {
-				$output.= "\t\t<td>".$toplistSort[$key]."</td>\n";
-
 				switch($i) {
 					case 0:
 						$playerList[$aKey][playerRank] = $toplistSort[$key];
@@ -179,24 +174,20 @@ switch($_GET['action']) {
 						$playerList[$aKey][playerExperience] = $toplistSort[$key];
 						break;
 				}
-
+				
 				$i++;
 				$key++;
 			}
 			
 			$playerList[$aKey][playerProgress] = $rank->getPlayerProgress($playerList[$aKey][playerName]);
 			
-			$i = 0;
+			unset($i);
 			$key++;
 			$aKey++;
 		}
 		
 		$smarty->assign("rankingList", $playerList);
 		$smarty->display("ranking.tpl");
-		break;
-	
-	case "random":
-		echo rand(80,100);
 		break;
 		
 	case "contact":
@@ -213,10 +204,14 @@ switch($_GET['action']) {
 		$smarty->display("contact.tpl");
 			
 		break;
+
+	case "updateRanks":
+		
+			$rank->readRanks();
+			$rank->parseRanks();
+			$rank->saveToDB();
+		
+			break;	
 		
 }
-
-#print_r($playerList);
-#print_r($toplistSort);
-#print_r($GLOBALS);
 ?>
