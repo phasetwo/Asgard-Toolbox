@@ -28,6 +28,7 @@ if(!$_SESSION['password']) {
 
 // Die Beispieldaten fuer jeweils Phase und Flinxx
 // aus der Ranking-Progress DB auslesen
+
 $progressArray = array(
 	"PhaseTwo" => $rank->getPlayerProgress("PhaseTwo"),
 	"Flinxx" => $rank->getPlayerProgress("Flinxx")
@@ -207,7 +208,10 @@ switch($_GET['action']) {
 
 	case "updateRanks":
 		
-			$rank->readRanks();
+			$rank->readRanks("aidian");
+			$rank->readRanks("bulkan");
+			$rank->readRanks("kailipton");
+			$rank->readRanks("human");
 			$rank->parseRanks();
 			$rank->saveToDB();
 		
