@@ -176,38 +176,33 @@ class rankHandler {
 		}
 		
 		// Unterschiede eines Spielers als Array ausgeben
-		// @param id
+		// @param string $playerName
 		public static function getPlayerProgress($playerName) {
 			if(self::playerExist($playerName)) {
-				
+
 				// mindestens 2 Ergebnisse finden
 				$query = "SELECT * FROM data WHERE playerId='".self::getPlayerId(self::getPlayer($playerName))."' ORDER BY id DESC LIMIT 2";
 				$query = self::$mysqli->query($query);
-				
+		
 				while($array = $query->fetch_array(MYSQLI_ASSOC)) {
 					$results[] = $array;
 				}
-				
-				$diffLevel = $results[1]['playerLevel'] - $results[0]['playerLevel'];
-				echo "Erst ".$results[1]['playerLevel'].", dann ".$results[0]['playerLevel'];
-				
+			
+				// Bei einem Unterschied (Altes Level <> Neues Level) wird angepasst
 				if(isset($results[1]['playerLevel']) && $results[1]['playerLevel'] != $results[0]['playerLevel']) {
-					echo "Unterschied!";
-					$plusExp = self::getPlusExp($results[0]['playerLevel']) - (self::getPlusExp($result[1]['playerLevel']) - $results[1]['playerExp']);
-					echo $plusExp;
+					$exp = $results[1]['playerExp'] + (self::getPlusExp($results[0]['playerLevel']) - $results[0]['playerExp']); 
+				} else {
+					$exp = $results[1]['playerExp'] - $results[0]['playerExp'];
 				}
-				
-				// Exp bei Levelup korrigieren
-				$diffExp = $result[] = self::goodNumber(($results[1]['playerExp'] - $results[0]['playerExp']) + $plusExp);
 
 				$result = array(
 					"progressRank" => $results[1]['playerRank'] - $results[0]['playerRank'],
 					"progressLevel" => $results[0]['playerLevel'] - $results[1]['playerLevel'],
-					"progressExp" => $diffExp
+					"progressExp" => self::goodNumber($exp)
 				);
-				
+
 				return $result;
-				
+
 			}
 		}
 		
