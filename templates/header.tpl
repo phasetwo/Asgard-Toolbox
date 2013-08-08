@@ -46,6 +46,7 @@
 			$(".numbers").each(function() {
                 $(this).format({format:"#,###", locale:"us"});
             });
+    {/literal}
 
 	{*
 	var progresspump = setInterval(function(){
@@ -70,7 +71,6 @@
 	    } 
 	); 
 	</script>
-	{/literal}
     </head>
     <body style="cursor: auto;">
 	
