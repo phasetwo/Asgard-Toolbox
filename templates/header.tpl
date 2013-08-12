@@ -20,15 +20,16 @@
 		.ok { color:green }
 		.epicfail { color:red; font-weight:700 }
         </style>
-	<link rel="stylesheet" type="text/css" href="./assets/js/jquery/themes/blue/style.css" />
-	<!--
+		<link rel="stylesheet" type="text/css" href="./assets/js/jquery/themes/blue/style.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/custom.css" />
+		<!--
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css">
         <link href="http://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet" type="text/css" data-bootstrap-theme-name="Cosmo">
-	-->
+		-->
         <link href="./assets/css/custom.css" rel="stylesheet" type="text/css">
 
-	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./assets/ico/apple-touch-icon-114-precomposed.png">
@@ -80,7 +81,7 @@
                     <div class="container">
                         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" style>
                             <span class="icon-bar" style></span> <span class="icon-bar" style></span> <span class="icon-bar" style></span>
-                        </button><a class="brand" href="index.php" style="font-weight: bold;"><img src="./assets/img/logo.png" alt="{$global.siteTitle}" title="{$global.siteTitle}" style="height: 25px; width: auto" /></a>
+                        </button><a class="brand" href="index.php" style="font-weight: bold;"><!-- <img src="./assets/img/logo.png" alt="{$global.siteTitle}" title="{$global.siteTitle}" style="height: 25px; width: auto" />-->Asgard Toolbox</a>
                         <div class="nav-collapse collapse">
 							{include file="menu.tpl"}
                         </div>
