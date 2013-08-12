@@ -206,6 +206,10 @@ class rankHandler {
 			}
 		}
 		
+		private static function getPercentLeft($expLeft, $level) {
+			#$expGained = self::getPlusExp($level) - $expLeft;
+			return ($expLeft / self::getPlusExp($level))*100;	
+		}
 		
 		// Nummer in lesbares Format konvertieren
 		public static function goodNumber($n) {
