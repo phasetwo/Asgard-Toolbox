@@ -15,10 +15,10 @@
 		
 		<table class="table table-bordered table-striped table-hover tablesorter" id="sortRanking">
 		<thead>
-		<tr><th>Rank</th><th>Level</th><th>Name</th><th>Experience left</th><th>+Exp gained</th<</tr>
+		<tr><th>Rank</th><th>Level</th><th>Name</th><th>Experience left</th></tr>
 		</thead><tbody>
 		{foreach from=$rankingList item=player}
-		{if $player.playerLevel}<tr><td>{$player.playerRank}.</td><td>{$player.playerLevel} {include file="ranking_rankup.tpl"}</td><td><a href="#">{$player.playerName}</a></td><td>{$player.playerExperience}</td><td>{if $player.playerProgress.progressExp != 0}{$player.playerProgress.progressExp}{else}-{/if}</td></tr>{/if}
+		{if $player.playerLevel}<tr{if $player.playerProgress.progressExp > 0} class="success"{/if}><td>{$player.playerRank}.</td><td>{$player.playerLevel} {include file="ranking_rankup.tpl"}</td><td><a href="#">{$player.playerName}</a></td><td>{$player.playerExperience}{if $player.playerProgress.progressExp != 0} <span class="badge badge-success pull-right">+ {$player.playerProgress.progressExp}</span>{/if}</td></tr>{/if}
 		{/foreach}
 		</tbody>
 		</table>
