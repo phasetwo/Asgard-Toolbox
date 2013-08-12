@@ -206,6 +206,8 @@ class rankHandler {
 			}
 		}
 		
+		
+		// Nummer in lesbares Format konvertieren
 		public static function goodNumber($n) {
 			// first strip any formatting;
 			$n = (0+str_replace(",","",$n));
@@ -222,6 +224,7 @@ class rankHandler {
 			return number_format($n);
 		}
 		
+		// Die benoetigten Exp-Zahlen fuer entsprechende Level.
 		private static function getPlusExp($int) {
 			
 			switch($int) {
