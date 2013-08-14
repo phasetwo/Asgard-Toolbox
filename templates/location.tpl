@@ -5,7 +5,6 @@
 				  <ul class="dropdown-menu">
 					<li><a href="index.php?action=diamond-upping">Diamond Upping Tool</a></li>
 					<li><a href="index.php?action=ranking">Ranking</a></li>
-					<li><a href="#">Tool 3</a></li>
 					<li class="divider"></li>
 					<li><a href="index.php?action=tools">Overview</a></li>
 				  </ul>
