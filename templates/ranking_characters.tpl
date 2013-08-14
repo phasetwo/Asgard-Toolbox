@@ -1,4 +1,4 @@
-<div class="btn-group">
+		<div class="btn-group">
             <a class="btn btn-primary" href="#">{if !$smarty.get.race}Select Race{elseif $smarty.get.race == "aidian"}Aidian{elseif $smarty.get.race == "bulkan"}Bulkan{elseif $smarty.get.race == "human"}Human{elseif $smarty.get.race == "kailipton"}Kailipton{/if}</a>
             <a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#"><span class="caret"></span></a>
             <ul class="dropdown-menu">
