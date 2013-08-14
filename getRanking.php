@@ -200,6 +200,8 @@ class rankHandler {
 					"progressLevel" => $results[0]['playerLevel'] - $results[1]['playerLevel'],
 					"progressExp" => self::goodNumber($exp)
 				);
+				
+				self::$mysqli->query("INSERT INTO data_toplist VALUES('', '".$playerName."', '".$exp."', '".time()."')");
 
 				return $result;
 
