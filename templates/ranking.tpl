@@ -6,11 +6,10 @@
                     Ranking
                 </h1>
 
-		<hr />
 		
 		<div class="alert alert-info">  
 		  <a class="close" data-dismiss="alert">x</a>  
-		  The latest update progress was at {$smarty.now|date_format:"%H"}:00 {$smarty.now|date_format:"%p"}.
+		  The latest update was at {$smarty.now|date_format:"%H"}:00 {$smarty.now|date_format:"%p"}.
 		</div>
 		
 		<ul class="nav nav-tabs">
