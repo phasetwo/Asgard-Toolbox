@@ -7,10 +7,10 @@
                 </h1>
 
 		<hr />
-
+		
 		<div class="alert alert-info">  
 		  <a class="close" data-dismiss="alert">x</a>  
-		  <strong>Information</strong>These rankings are still under development and might be buggy.
+		  The latest update progress was at {$smarty.now|date_format:"%H"}:00 {$smarty.now|date_format:"%p"}.
 		</div>
 		
 		<ul class="nav nav-tabs">
