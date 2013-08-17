@@ -122,6 +122,7 @@ class rankHandler {
 				}
 
 				self::playerUpdate($item, self::getPlayer($item['playerName']));
+				self::addToToplist(self::$rankArray['playerName'], self::$rankArray['playerExperience']);
 
 			}
         }
@@ -200,12 +201,15 @@ class rankHandler {
 					"progressLevel" => $results[0]['playerLevel'] - $results[1]['playerLevel'],
 					"progressExp" => self::goodNumber($exp)
 				);
-				
-				self::$mysqli->query("INSERT INTO data_toplist VALUES('', '".$playerName."', '".$exp."', '".time()."')");
 
 				return $result;
 
 			}
+		}
+		
+		// Adding a record to the toplist
+		private static function addToToplist($playerName, $exp) {
+			self::$mysqli->query("INSERT INTO data_toplist VALUES('', '".$playerName."', '".$exp."', '".time()."')");
 		}
 		
 		private static function getPercentLeft($expLeft, $level) {
